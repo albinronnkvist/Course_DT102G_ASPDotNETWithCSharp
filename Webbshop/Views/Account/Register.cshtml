@@ -1,0 +1,40 @@
+﻿@model Webbshop.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrera";
+}
+
+<h2>Registrera</h2>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="manage-form">
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group" style="margin-left: 0;">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group" style="margin-left: 0;">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group" style="margin-left: 0;">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="form-group" style="margin-left: 0;">
+                        <input type="submit" class="btn btn-primary form-button" value="Registrera" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,98 @@
+﻿@model Webbshop.Models.ViewModelPCC
+
+@{
+    ViewData["Title"] = "Start";
+}
+
+<h2>Produkter</h2>
+<hr />
+<!-- Filters -->
+<div class="row" id="filters">
+    <div class="form-group col-md-12">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-filter"></i>
+                    </span>
+                    <select class="form-control" id="categoryId" name="categoryId">
+                        <option value="0" hidden>Välj en kategori...</option>
+                        @foreach (Webbshop.Models.CategoryDetail category in Model.CategoryList)
+                        {
+                            <option value="@category.Id">@category.CategoryName</option>
+                        }
+                    </select>
+                </div>
+                <input type="submit" value="Välj" class="btn btn-primary" />
+            </div>
+        }
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+                    <input class="form-control" type="text" name="productName" id="productName" placeholder="Sök efter produkt" />
+                </div>
+                <input type="submit" value="Sök" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Messages -->
+<!-- Choosen category -->
+@if (ViewBag.categoryid != null && ViewBag.categoryid >= 1 && ViewBag.productName == null)
+{
+    <p>Visar resultat för: <b>@Html.DisplayFor(model => model.SingleCategory.CategoryName)</b></p>
+}
+
+<!-- Search value -->
+<p class="text-danger">@ViewBag.searcherror</p>
+@if (ViewBag.productName != null && ViewBag.searcherror == null)
+{
+    <p>Visar resultat för: <b>@ViewBag.productName</b></p>
+}
+
+<!-- Clear filter -->
+@if (ViewBag.categoryid != null || ViewBag.productName != null)
+{
+    @Html.ActionLink("Rensa filter", "Index", "Home")
+    <br /><br />
+}
+
+
+
+<!-- Products -->
+<div class="card-deck">
+    @foreach (Webbshop.Models.ProductDetail products in Model.ProductList)
+    {
+        <div class="card">
+            <div class="imgContainer">
+                <img class="card-img-top" alt="@products.ProductImageDescription"
+                     src="data:image/jpg;charset=utf-8;base64,@Convert.ToBase64String(products.ProductImage)" />
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@products.ProductName</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@products.ProductPrice kr</h6>
+                <p class="card-text"></p>
+            </div>
+
+            <!-- Links -->
+            <a href="@Url.Action("SpecificProduct", "Home", new { productId = products.Id })" class="btn btn-primary">
+                Läs mer
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </a>
+        </div>
+    }
+</div>
+<div style="clear:both;"></div>

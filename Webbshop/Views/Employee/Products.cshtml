@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Webbshop.Models.ProductDetail>
+
+@{
+    ViewData["Title"] = "Produkter";
+}
+
+
+
+<h2>Produkter</h2>
+<hr />
+
+
+
+<!-- Link to create new product-->
+<p>
+    <a href="@Url.Action("CreateProduct", "Employee")">
+        <span class="fas fa-plus-circle" aria-hidden="true"></span>
+        Skapa ny produkt
+    </a>
+</p>
+
+
+
+<!-- Messages -->
+@if ((ViewBag.error != null) && (ViewBag.error != ""))
+{
+    <p class="text-danger">Fel vid inläsning av produkter: @ViewBag.error</p>
+}
+@if ((ViewBag.deleteError != null) && (ViewBag.deleteError != ""))
+{
+    <p class="text-danger">Fel vid borttagning av produkt: @ViewBag.deleteError</p>
+}
+else if ((ViewBag.productName != null) && (ViewBag.productName != ""))
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="text-success">Produkten <b>@ViewBag.productName</b> är nu borttagen! <!-- @ViewBag.affectedRows rad påverkades. --></p>
+            <button class="btn btn-success" id="close">OK</button>
+        </div>
+    </div>
+}
+
+
+<!-- List of products -->
+<p>Alla produkter:</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div class="listImg">
+                    <img alt="@item.ProductImageDescription"
+                         src="data:image/jpg;base64,@Convert.ToBase64String(item.ProductImage)" />
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                <a href="@Url.Action("EditProduct", "Employee", new { id = item.Id })" class="btn btn-primary">
+                    <span class="fas fa-pen" aria-hidden="true"></span>
+                    Redigera
+                </a>
+                <a href="@Url.Action("DeleteProduct", "Employee", new { id = item.Id, productName = item.ProductName })" onclick="return confirm('Är du säker på att du vill radera denna kategori?')" class="btn btn-danger">
+                    <span class="fas fa-trash" aria-hidden="true"></span>
+                    Radera
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,52 @@
+﻿@model Webbshop.Models.ProductDetail
+
+
+@{
+    ViewData["Title"] = Html.DisplayFor(model => model.ProductName);
+    ViewData["Keywords"] = Model.ProductKeywords;
+    ViewData["Description"] = Model.ProductDescription;
+    ViewData["Url"] = Request.Url.ToString();
+    ViewData["Image"] = "data:image/jpg;charset=utf-8;base64," + @Convert.ToBase64String(Model.ProductImage);
+}
+
+<h2>@Html.DisplayFor(model => model.ProductName)</h2>
+<hr />
+
+
+<div class="specificProduct">
+    <div class="imgContainer2">
+        <img class="productImage" alt="@Model.ProductImageDescription"
+             src="data:image/jpg;charset=utf-8;base64,@Convert.ToBase64String(Model.ProductImage)" />
+    </div>
+
+    <div class="productInfo">
+        <h3>@Model.ProductName</h3>
+        <p><b>@Model.ProductPrice</b> kr</p>
+        <br />
+        <p>@Model.ProductDescription</p>
+
+        @using (Html.BeginForm("ShoppingCart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ProductName)
+            @Html.HiddenFor(model => model.ProductPrice)
+
+            <div class="form-group">
+                <input type="submit" value="Köp" class="btn btn-primary form-button" />
+            </div>
+        }
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+
+
+<!-- Links -->
+<a href="@Url.Action("Index", "Home")">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    Tillbaka till produkter
+</a>

@@ -1,0 +1,59 @@
+﻿@model Webbshop.Models.CategoryDetail
+
+@{
+    ViewData["Title"] = "Skapa kategori";
+}
+
+<h2>Skapa kategori</h2>
+<hr />
+
+
+
+<!-- Messages -->
+@if ((ViewBag.error != null) && (ViewBag.error != ""))
+{
+    <p class="text-danger">Felmeddelande: @ViewBag.error</p>
+}
+else if ((ViewBag.affectedRows > 0) && (ViewBag.affectedRows != null))
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="text-success">Kategorin <b>@ViewBag.categoryName</b> är nu tillagd! <!-- @ViewBag.affectedRows rad påverkades. --></p>
+            <button class="btn btn-success" id="close">OK</button>
+        </div>
+    </div>
+}
+
+
+
+<!-- Form -->
+<p>Skapa ny kategori:</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="manage-form">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, "Kategorinamn", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Skapa" class="btn btn-primary form-button" />
+        </div>
+    </div>
+}
+
+
+
+<!-- Go back -->
+<p>
+    <a href="@Url.Action("Categories", "Employee")">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Tillbaka till lista
+    </a>
+</p>

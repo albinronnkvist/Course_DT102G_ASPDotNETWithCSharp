@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @if (ViewBag.Keywords != null & ViewBag.Keywords != "")
+    {
+        <!-- Open graph protocol-->
+        <meta property="og:title" content="@ViewBag.Title" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="@ViewBag.Url" />
+        <meta property="og:image" content="@ViewBag.Image" />
+
+        <!-- Other meta-tags -->
+        <meta name="keywords" content="@ViewBag.Keywords" />
+        <meta name="description" content="@ViewBag.Description" />
+    }
+    <title>@ViewBag.Title - Webbshop</title>
+
+    <!-- Styles / Scripts -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
+    @Scripts.Render("~/Scripts/Site.js")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <!-- Menu -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Webbshop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Produkter", "Products", "Employee")</li>
+                        <li>@Html.ActionLink("Kategorier", "Categories", "Employee")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Registrera användare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year Webbshop</p>
+            <br />
+            @if (!Request.IsAuthenticated)
+            {
+                <a href="@Url.Action("Login", "Account")" , routeValues: null, htmlAttributes: new { id="loginLink" })>
+                    <span class="fas fa-sign-in-alt" aria-hidden="true"></span>
+                    Logga in som anställd
+                </a>
+            }
+            </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

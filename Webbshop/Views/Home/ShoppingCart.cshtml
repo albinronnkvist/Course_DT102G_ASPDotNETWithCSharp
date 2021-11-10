@@ -1,0 +1,54 @@
+﻿@model  IEnumerable<Webbshop.Models.ProductDetail>
+
+@{
+    ViewData["Title"] = "Start";
+}
+
+<h2>Kundvagn</h2>
+<hr />
+
+@if (Session["ShoppingList"] != null)
+{
+    decimal totalPrice = 0;
+    <table class="table" style="max-width: 500px;">
+        <tr>
+            <th>Produkt</th>
+            <th>Pris</th>
+        </tr>
+        @foreach (Webbshop.Models.ProductDetail p in (List<Webbshop.Models.ProductDetail>)Session["ShoppingList"])
+        {
+            <tr>
+                <td>@p.ProductName</td>
+                <td>@p.ProductPrice kr</td>
+            </tr>
+            totalPrice += p.ProductPrice;
+        }
+        <tfoot>
+            <tr>
+                <td><b>Totalt pris:</b> @totalPrice kr</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    <a href="@Url.Action("ClearShoppingCart", "Home")" onclick="return confirm('Köp genomfört!')" class="btn btn-primary form-button">
+        <span class="fas fa-credit-card" aria-hidden="true"></span>
+        Betala
+    </a>
+    <a href="@Url.Action("ClearShoppingCart", "Home")" onclick="return confirm('Är du säker på att du vill rensa din varukorg?')" class="btn btn-danger form-button">
+        <span class="fas fa-trash" aria-hidden="true"></span>
+        Rensa
+    </a>
+}
+else
+{
+<p>Kundvagnen är tom.</p>
+}
+
+
+
+<br /><br />
+<!-- Links -->
+<a href="@Url.Action("Index", "Home")">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    Fortsätt handla
+</a>
