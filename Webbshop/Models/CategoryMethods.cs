@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,11 +16,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -106,11 +103,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -190,12 +183,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
-
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
             // SQL-query
@@ -255,11 +243,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -321,13 +305,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
-
-
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
             // SQL-query
             // Create SQL-string

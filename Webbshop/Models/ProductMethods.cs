@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,17 +10,14 @@ namespace Webbshop.Models
 {
     public class ProductMethods
     {
+
         // SELECT
         // Select all products
         public List<ProductDetail> SelectAllProducts(out string errormsg)
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -112,17 +110,13 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
             // SQL-query
             // Create SQL-string
-            String sqlstring = "SELECT * FROM [Products] WHERE Id = @id";
+            string sqlstring = "SELECT * FROM [Products] WHERE Id = @id";
             SqlCommand dbCommand = new SqlCommand(sqlstring, dbConnection);
 
             // Add parameters
@@ -202,17 +196,13 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
             // SQL-query
             // Create SQL-string
-            String sqlstring = "INSERT INTO [Products] " +
+            string sqlstring = "INSERT INTO [Products] " +
                 "(CategoryId, ProductName, ProductKeywords, ProductDescription, ProductPrice, ProductImage, ProductImageDescription) " +
                 "VALUES (@categoryId, @productName, @productKeywords, @productDescription, @productPrice, @productImage, @productImageDescription)";
             SqlCommand dbCommand = new SqlCommand(sqlstring, dbConnection);
@@ -275,11 +265,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -350,11 +336,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
@@ -415,12 +397,7 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
-
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
             // SQL-query
@@ -515,17 +492,13 @@ namespace Webbshop.Models
         {
             // DB-connect
             // Create SQL-connection
-            SqlConnection dbConnection = new SqlConnection
-            {
-                // Connect to SQL Server database
-                ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Webbshop;Integrated Security=True"
-            };
+            SqlConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 
 
 
             // SQL-query
             // Create SQL-string
-            String sqlstring = "SELECT * FROM [Products] WHERE [ProductName] LIKE '%'+@productName+'%'";
+            string sqlstring = "SELECT * FROM [Products] WHERE [ProductName] LIKE '%'+@productName+'%'";
             SqlCommand dbCommand = new SqlCommand(sqlstring, dbConnection);
 
             // Add parameter
